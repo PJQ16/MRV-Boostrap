@@ -1,0 +1,7 @@
+/* CSS สำหรับเปลี่ยนสีของแท็บที่ active */
+.nav-link.active {
+  background: linear-gradient(195deg, rgba(238,131,17,1) 0%, rgba(236,187,131,1) 92%) !important; /* สีส้มอ่อน */
+    border-color: #ffffff !important; /* เปลี่ยนสีกรอบของ active tab */
+    color: white !important; /* สีตัวอักษรเป็นสีขาว */
+  }
+  
