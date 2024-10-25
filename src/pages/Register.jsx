@@ -50,7 +50,7 @@ export default function Register({
     <PageLogin logoIn={logoIn}>
       {" "}
       {/* ส่ง logoIn ไปยัง PageLogin */}
-      <Card card=" border-0 p-3 rounded">
+      <Card card=" border-0 p-3 rounded my-4">
         <div className="d-flex justify-content-center">
           <img
             src={logo}

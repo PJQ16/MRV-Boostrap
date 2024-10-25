@@ -10,7 +10,7 @@ export default function PageLogin({ children, logoIn,Register,PGLSty }) { // ใ
           </div>
         </div>
 
-        <div className="col-md-5 d-flex bg-dark text-white p-0 position-relative">
+        <div className="col-md-5 d-none d-sm-flex bg-dark text-white p-0 position-relative">
           <img 
             src={logoIn} // รับ logoIn ที่ส่งเข้ามา
             alt="Image" 

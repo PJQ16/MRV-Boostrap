@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import Tabs from "../../components/Tabs"; // Import Tabs component
-import TabContent from "../../components/TabContent"; // Import TabContent component
+import Tabs from "../../components/Tabs"; 
+import TabContent from "../../components/TabContent"; 
 import Table from "../../components/Table";
 import Modal from "../../components/Modal";
 import "./style.css";
@@ -9,41 +9,72 @@ import PDP from "./PDP";
 import AEDP from "./AEDP";
 import Oil from './Oil';
 import { IoSearchCircleSharp } from "react-icons/io5";
+import useStore from "../../store/usePlanStore";
 
 export default function PlanMidStone() {
   const [activeTab, setActiveTab] = useState("1");
-  const [years,setYears] = useState('');
-  const tabs = [
-    { id: "1", title: "1.POWER", content: 
-      <>
-    <span className="h4">พลังงาน {years}</span>
-       <PDP />
-     </>
-     },
-    { id: "2", title: "2.AEDP", content: <><span className="h4">พลังงานทดแทน {years}</span> <AEDP/></> },
-    { id: "3", title: "3.Oil", content: <><span className="h4">น้ำมัน {years}</span> <Oil/></> },
-    { id: "4", title: "4.EEP", content: <>เนื้อหาแท็บ 4</> },
-    { id: "5", title: "5.Gas", content: <>เนื้อหาแท็บ 5</> },
-    { id: "6", title: "6.EV", content: <>เนื้อหาแท็บ 6</> },
-    { id: "7", title: "7.Hydrogen", content: <>เนื้อหาแท็บ 7</> },
-    { id: "8", title: "8.CO2", content: <>เนื้อหาแท็บ 8</> },
-  ];
+  const [years, setYears] = useState('');
+  const { fetchPlan, plans } = useStore();
 
-  const handleYearChange = (e) =>{
+  useEffect(() => {
+    fetchPlan();
+  }, []);
+
+  const handleYearChange = (e) => {
     setYears(e.target.value);
-  } 
-
+  };
 
   const startYear = 2566;
-  const currentYear = new Date().getFullYear() + 543; // แปลงเป็นปีพุทธศักราช
+  const currentYear = new Date().getFullYear() + 543; // Convert to Buddhist year
   const endYear = 2580;
 
   const allyears = [];
 
-  // สร้าง array ของปีจาก 2566 จนถึงปีปัจจุบันหรือไม่เกิน 2580
   for (let i = startYear; i <= Math.min(currentYear, endYear); i++) {
     allyears.push(i);
   }
+
+  // Generate tabs dynamically based on plans data
+  const tabs = plans.map((item, index) => {
+    let content;
+  
+    switch(item.name) {
+      case 'Power':
+        content = (
+          <>
+            <span className="h4 m-2">แผนพลังงาน (Power Development Plan) {years}</span>
+            <PDP /> {/* Render PDP component */}
+          </>
+        );
+        break;
+      case 'AEDP':
+        content = (
+          <>
+            <span className="h4">Alternative Energy Development Plan {years}</span>
+            <AEDP /> {/* Render AEDP component */}
+          </>
+        );
+        break;
+      case 'Oil':
+        content = (
+          <>
+            <span className="h4">แผนน้ำมัน (Oil Plan) {years}</span>
+            <Oil /> {/* Render Oil component */}
+          </>
+        );
+        break;
+      default:
+        content = <span className="h4">Other Plan {years}</span>;
+        break;
+    }
+  
+    return {
+      id: (index + 1).toString(), // Unique ID for each tab
+      title: `${index + 1}. ${item.name}`, // Assuming plans has a name property
+      content, // The content based on the switch statement
+    };
+  });
+  
 
   return (
     <div>
@@ -56,37 +87,35 @@ export default function PlanMidStone() {
             <div className="row">
               <div className="col-9">
                 <div className="">
-                <div className="d-flex justify-content-end">
-                <div className="position-relative d-flex align-items-center">
-              {/* ส่วนที่กำหนดให้ไอคอนอยู่ใน input */}
-              <IoSearchCircleSharp 
-                fontSize={24}
-               
-                className="position-absolute" 
-                style={{ left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'orange' }}
-              />
-              
-              {/* Select ที่มีไอคอนอยู่ใน input */}
-              <select
-                className="form-control ps-5"  // กำหนด padding left เพื่อเว้นที่ให้ไอคอน
-                onChange={handleYearChange}
-                style={{ paddingLeft: '40px' }} // เพิ่ม padding ให้ input เลื่อนไปหลังไอคอน
-              >
-                <option value="">ค้นหาปี</option>
-                {allyears.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
+                  <div className="d-flex justify-content-end">
+                    <div className="position-relative d-flex align-items-center">
+                      <IoSearchCircleSharp
+                        fontSize={24}
+                        className="position-absolute"
+                        style={{ left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'orange' }}
+                      />
+                      <select
+                        className="form-control ps-5"
+                        onChange={handleYearChange}
+                        style={{ paddingLeft: '40px' }}
+                      >
+                        <option value="">ค้นหาปี</option>
+                        {allyears.map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
                     </div>
+                  </div>
+                  {/* Render TabContent */}
                   <TabContent tabs={tabs} activeTab={activeTab} />
                 </div>
               </div>
               <div className="col-3 p-4">
-                <div className=" px-5">
+                <div className="px-5">
                   <div className="fw-lighte">แผนปฏิบัติการรายสาขา</div>
+                  {/* Render Tabs */}
                   <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
                 </div>
               </div>

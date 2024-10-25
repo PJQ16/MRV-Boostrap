@@ -44,31 +44,44 @@ export default function Navbar({ toggleSidebar }) {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
-      <div className="container-fluid d-flex justify-content-between">
-        <div>
-           <button onClick={toggleSidebar} className="btn btn-link" style={{ cursor: 'pointer' }}>
+    <nav 
+  className="navbar navbar-expand-lg navbar-light rounded-bottom-5"
+  style={{ 
+    background: 'linear-gradient(180deg, #ee8311, #ec9279)', // Gradient สีส้มและเทา
+  }}
+>
+    <div className="container-fluid d-flex justify-content-between">
+      <div>
+        <button onClick={toggleSidebar} className="btn btn-link" style={{ cursor: 'pointer' }}>
           <GiHamburgerMenu size={36} color='#ff5500' className='ms-3' />
         </button>
-        <Link className="navbar-brand"  to="/dashboard">MRV ระบบกรอกข้อมูล</Link>
-        </div>
-       
-      
-      
-       
-        <div className="d-flex align-items-center">
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item"><a className="nav-link text-dark" href="#"><IoIosSettings color='#ff5500'/> การตั้งค่า</a></li>
-              <li className="nav-item"><Link className="nav-link text-dark" to="/UserInfo"><FaUser color='#ff5500'/> {fname}</Link></li>
-              <li className="nav-item"><a className="nav-link text-dark" onClick={handleLogout} href='#'><VscSignOut color='#ff5500'/> ออกจากระบบ</a></li>
-            </ul>
-          </div>
+        <Link className="navbar-brand" to="/dashboard">MRV ระบบกรอกข้อมูล</Link>
+      </div>
+  
+      <div className="d-flex align-items-center">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link text-dark" href="#"><IoIosSettings color='#ff5500' /> การตั้งค่า</a>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark" to="/UserInfo">
+                <FaUser color='#ff5500' /> {fname}
+              </Link>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link text-dark" onClick={handleLogout} href='#'>
+                <VscSignOut color='#ff5500' /> ออกจากระบบ
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
+  
   );
 }
