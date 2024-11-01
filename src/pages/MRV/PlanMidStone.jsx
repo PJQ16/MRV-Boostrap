@@ -21,6 +21,8 @@ export default function PlanMidStone() {
   const [activeTab, setActiveTab] = useState("1");
   const [years, setYears] = useState(currentYear); // ตั้งค่าเริ่มต้นเป็น currentYear
   const { fetchTransections, Transections } = useStore();
+  const [modalData, setModalData] = useState(null); // State เพื่อเก็บข้อมูลที่จะแสดงใน Modal
+
 
   useEffect(() => {
     fetchTransections(); // ส่งค่า years เพื่อใช้ใน fetchTransections
@@ -28,6 +30,10 @@ export default function PlanMidStone() {
 
   const handleYearChange = (e) => {
     setYears(e.target.value);
+  };
+
+  const handleOpenModal = (data) => {
+    setModalData(data); // เก็บข้อมูลที่ส่งมาจาก PDP
   };
 
   const allyears = [];
@@ -44,7 +50,7 @@ export default function PlanMidStone() {
           content = (
             <>
               <span className="h4 m-2">แผนพลังงาน (Power Development Plan) {years}</span>
-              <PDP subCategories={plan.subCategories} /> {/* ส่ง subCategories ทั้งหมดไปที่ PDP */}
+              <PDP subCategories={plan.subCategories} onOpenModal={handleOpenModal} /> {/* ส่ง subCategories ทั้งหมดไปที่ PDP */}
             </>
           );
           break;
@@ -52,7 +58,7 @@ export default function PlanMidStone() {
           content = (
             <>
               <span className="h4">แผนน้ำมัน (Oil Plan) {years}</span>
-              <Oil subCategories={plan.subCategories}  />
+              <Oil subCategories={plan.subCategories}  onOpenModal={handleOpenModal} />
             </>
           );
           break;
@@ -60,7 +66,7 @@ export default function PlanMidStone() {
             content = (
               <>
                 <span className="h4">แผนก๊าซธรรมชาติ (Gas Plan) {years}</span>
-                <Gas subCategories={plan.subCategories}  />
+                <Gas subCategories={plan.subCategories}   onOpenModal={handleOpenModal} />
               </>
             );
             break;
@@ -69,7 +75,7 @@ export default function PlanMidStone() {
               <>
                 <span className="h4">แผนพัฒนาพลังงานทดแทน และ
                 พลังงานทางเลือก (Alternative Energy Development Plan) {years}</span>
-                <AEDP subCategories={plan.subCategories}  />
+                <AEDP subCategories={plan.subCategories}   onOpenModal={handleOpenModal} />
               </>
             );
             break;
@@ -77,7 +83,7 @@ export default function PlanMidStone() {
               content = (
                 <>
                   <span className="h4">แผนอนุรักษ์พลังงาน (Energy Efficiency plan) {years}</span>
-                  <AEDP subCategories={plan.subCategories}  />
+                  <AEDP subCategories={plan.subCategories}  onOpenModal={handleOpenModal} />
                 </>
               );
               break;
@@ -85,7 +91,7 @@ export default function PlanMidStone() {
                 content = (
                   <>
                     <span className="h4">แผนคาร์บอน (Carbon Plan) {years}</span>
-                    <AEDP subCategories={plan.subCategories}  />
+                    <AEDP subCategories={plan.subCategories}  onOpenModal={handleOpenModal}  />
                   </>
                 );
                 break;
@@ -93,7 +99,7 @@ export default function PlanMidStone() {
                   content = (
                     <>
                       <span className="h4">แผนยานพาหนะไฟฟ้า (Electric Vehicle) {years}</span>
-                      <AEDP subCategories={plan.subCategories}  />
+                      <AEDP subCategories={plan.subCategories}  onOpenModal={handleOpenModal} />
                     </>
                   );
                   break;
@@ -158,29 +164,39 @@ export default function PlanMidStone() {
             </div>
           </motion.div>
         </div>
-        <Modal id="monthlyModal" size="modal-lg" title="กรอกข้อมูลตามไตรมาส" motion="fade">
-          <Table tbSty="table table-bordered">
-            <thead>
-              <tr className="text-center">
-                <th>เดือน</th>
-                <th>ช่องกรอกข้อมูล</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
-              {[
-                "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษาคม", 
-                "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", 
-                "พฤศจิกายน", "ธันวาคม",
-              ].map((month, index) => (
-                <tr key={index}>
-                  <td>{month}</td>
-                  <td><input type="number" className="form-control" /></td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <button className="btn btn-primary">เพิ่มข้อมูล</button>
-        </Modal>
+        <Modal id="monthlyModal" size="modal-lg" title={`${modalData?.desciption} ${years}`} motion="fade">
+  <Table tbSty="table table-bordered">
+    <thead>
+      <tr className="text-center">
+        <th>เดือน</th>
+        <th>ช่องกรอกข้อมูล</th>
+      </tr>
+    </thead>
+    <tbody className="text-center">
+      {[
+        { name: "มกราคม", value: modalData?.jan_val },
+        { name: "กุมภาพันธ์", value: modalData?.feb_val },
+        { name: "มีนาคม", value: modalData?.mar_val },
+        { name: "เมษายน", value: modalData?.apr_val },
+        { name: "พฤษภาคม", value: modalData?.may_val },
+        { name: "มิถุนายน", value: modalData?.jun_val },
+        { name: "กรกฎาคม", value: modalData?.jul_val },
+        { name: "สิงหาคม", value: modalData?.aug_val },
+        { name: "กันยายน", value: modalData?.sep_val },
+        { name: "ตุลาคม", value: modalData?.oct_val },
+        { name: "พฤศจิกายน", value: modalData?.nov_val },
+        { name: "ธันวาคม", value: modalData?.dec_val },
+      ].map((month, index) => (
+        <tr key={index}>
+          <td>{month.name}</td>
+          <td><input type="number" defaultValue={month.value} className="form-control" /></td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+  <button className="btn btn-primary">เพิ่มข้อมูล</button>
+</Modal>
+
       </Layout>
     </div>
   );

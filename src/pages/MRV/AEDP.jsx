@@ -3,8 +3,27 @@ import Accordion from "../../components/Accordion";
 import Table from '../../components/Table';
 import { FaSave } from "react-icons/fa";
 import Card from '../../components/Card';
+import Modal from '../../components/Modal';
 
-export default function AEDP({ subCategories }) { // รับ subCategories ทั้งหมดเป็น props
+export default function AEDP({ subCategories,onOpenModal }) { // รับ subCategories ทั้งหมดเป็น props
+
+  const valueYear = (data) => {
+    return [
+      data.jan_val,
+      data.feb_val,
+      data.mar_val,
+      data.apr_val,
+      data.may_val,
+      data.jun_val,
+      data.jul_val,
+      data.aug_val,
+      data.sep_val,
+      data.oct_val,
+      data.nov_val,
+      data.dec_val,
+    ].reduce((total, value) => total + (parseFloat(value) || 0), 0);
+  };
+
   const accordionItems = subCategories.map((subCategory, subCategoryIndex) => ({
     title: subCategory.category, // ชื่อหัวข้อของ Accordion แต่ละอัน
     content: (
@@ -24,8 +43,19 @@ export default function AEDP({ subCategories }) { // รับ subCategories ท
               <td className="text-center">{detailIndex + 1}</td>
               <td>{detail.desciption}</td>
               <td className="text-center">{detail.unit}</td>
-              <td><input type="number" className="form-control" /></td>
-              <td><input type="number" className="form-control" /></td>
+              {detail.period_type === 'Yearly' ? (
+                <>
+                 <td><input type="number" defaultValue={detail.plan_value} className="form-control" /></td>
+                 <td><input type="number" defaultValue={detail.actual_value} className="form-control" /></td>
+                </>
+              ) : (
+                <>
+                <td><input type="number"  defaultValue={detail.plan_value}  className="form-control" /></td>
+                <td><input type="number" defaultValue={valueYear(detail)}  readOnly onClick={() => onOpenModal(detail)}
+                data-bs-toggle="modal" data-bs-target="#monthlyModal" className="form-control" /></td>
+               </>  
+              )}
+             
             </tr>
           ))}
         </tbody>
