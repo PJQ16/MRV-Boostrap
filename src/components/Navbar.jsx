@@ -47,7 +47,7 @@ export default function Navbar({ toggleSidebar }) {
     <nav 
   className="navbar navbar-expand-lg navbar-light rounded-bottom-5"
   style={{ 
-    background: 'linear-gradient(180deg, #ee8311, #ec9279)', // Gradient สีส้มและเทา
+    background: 'linear-gradient(to right, #ee8311, #ec9279)', // Gradient สีส้มและเทา
   }}
 >
     <div className="container-fluid d-flex justify-content-between">

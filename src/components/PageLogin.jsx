@@ -4,7 +4,9 @@ export default function PageLogin({ children, logoIn,Register,PGLSty }) { // ใ
   return (
     <div className="container-fluid vh-100">
       <div className="row h-100">
-        <div className="col-md-7 d-flex justify-content-center align-items-center  position-relative" style={{background:'linear-gradient(163deg, rgba(250, 240, 231,1) 0%, rgba(200, 104, 17 ,1) 100%)'}}>
+        <div className="col-md-7 d-flex justify-content-center align-items-center  position-relative" style={{
+          background:'linear-gradient(163deg, rgba(250, 240, 231,1) 0%, rgba(200, 104, 17 ,1) 100%)'
+          }}>
           <div className="w-50" style={PGLSty}>
             {children} {/* ใช้ children ที่ส่งเข้ามา */}
           </div>

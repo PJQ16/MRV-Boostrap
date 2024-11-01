@@ -10,6 +10,7 @@ import { FaUserEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import config from "../../config";
+import { motion } from "framer-motion";
 
 export default function Register({
   logoIn,
@@ -50,6 +51,11 @@ export default function Register({
     <PageLogin logoIn={logoIn}>
       {" "}
       {/* ส่ง logoIn ไปยัง PageLogin */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        >
       <Card card=" border-0 p-3 rounded my-4">
         <div className="d-flex justify-content-center">
           <img
@@ -195,6 +201,7 @@ export default function Register({
           </div>
         </form>
       </Card>
+      </motion.div>
     </PageLogin>
   );
 }

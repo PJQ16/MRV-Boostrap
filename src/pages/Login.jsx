@@ -10,6 +10,7 @@ import { FaAddressCard } from "react-icons/fa6";
 import axios from 'axios';
 import config from '../../config';
 import useLoginStore from '../store/useLogin';
+import { motion } from 'framer-motion';
 
 export default function Login({ logoIn, register, handleSubmit, errors,reset}) {
   const {actionLogin,} = useLoginStore();
@@ -34,11 +35,14 @@ export default function Login({ logoIn, register, handleSubmit, errors,reset}) {
 
   return (
     <PageLogin logoIn={logoIn}> {/* ส่ง logoIn ไปยัง PageLogin */}
+     <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}>
     <Card card=' p-4 mt-2 shadow-lg border-0'>
     <div className="d-flex justify-content-center" >
       <img src={logo} width={150} height={150} className='bg-white' />
     </div>
-   
       <form onSubmit={handleSubmit(onSubmit)}>
       <Inputs
           type="email"
@@ -85,7 +89,9 @@ export default function Login({ logoIn, register, handleSubmit, errors,reset}) {
         </div>
       
       </form>
+      
       </Card>
+      </motion.div>
     </PageLogin>
   );
 }

@@ -341,6 +341,7 @@ export default function Detail() {
                 />
               </div>
               <div className="col-md-3">
+                
               <Inputs
                   label="เป้าหมายย่อย"
                   name="sub_target_id"

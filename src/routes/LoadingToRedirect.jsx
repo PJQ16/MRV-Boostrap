@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import ClockLoader from 'react-spinners/ClockLoader';
+import RingLoader from 'react-spinners/RingLoader';
 
 export default function LoadingToRedirect() {
   const [count, setCount] = useState(2);
@@ -26,7 +26,7 @@ export default function LoadingToRedirect() {
   return (
     <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
       <div className="position-relative" style={{ width: '150px', height: '150px' }}>
-        <ClockLoader size={300} color="#ff6600" />
+        <RingLoader size={300} color="#ff6600" />
         <h1
           className="position-absolute w-100 text-center"
           style={{

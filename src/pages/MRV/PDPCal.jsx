@@ -5,6 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion"
 export default function PDPCal() {
     const navigate = useNavigate();
     const handleEditFillData = async()=>{
@@ -23,6 +24,10 @@ export default function PDPCal() {
   return (
     <div>
         <Layout>
+        <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}>
             <div className="border-0 bg-white shadow-sm  rounded p-5 m-4">
                     <span className='fw-bold h4'>2. ตารางคำนวณและแสดงผล PDP (Power Development Plan)</span>
                     <p className='mt-2 ps-2  h5 fw-light'>2.1 ตารางคำนวณและแสดงผลสำหรับ target 1.1.2</p>
@@ -937,6 +942,7 @@ export default function PDPCal() {
                    
                    <button onClick={handleEditFillData} className='btn btn-warning'><CiEdit fontSize={35} style={{backgroundColor:'white',borderRadius:360,padding:'10px',color:'black'}}/> แก้ไขข้อมูล</button>
             </div>
+            </motion.div>
         </Layout>
     </div>
   )
